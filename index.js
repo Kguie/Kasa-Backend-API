@@ -4,28 +4,30 @@ const mongoose = require('mongoose')
 const app = express()
 const Lodging = require('./models/lodging')
 const PORT = 4000
+const cors = require('cors')
 
 //Cors
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-    res.setHeader("Content-Security-Policy", " default-src 'self' ', script-src 'self' 'unsafe-inline' 'unsafe-eval', style-src 'self' 'unsafe-inline' 'unsafe-eval'; ")
-    next();
-});
+app.use(cors());
 
 
 //Database connection
 
 app.get('/lodgings', async (req, res) => {
+    mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/KasaDB", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+        .then(() => console.log("Connexion à MongoDB réussie !"))
+        .catch(() => console.log("Connexion à MongoDB échouée !"));
+
 
     const results = await Lodging.find({})
 
     try {
-        res.send(
-            'status: 200,'
-
-        )
+        res.json({
+            status: 200,
+            lodgings: results
+        })
     }
     catch (error) {
         res.json({
@@ -36,12 +38,12 @@ app.get('/lodgings', async (req, res) => {
 }
 )
 
-app.get('/lodging', (req, res) => {
-    res.send('Hey this is my API running 🥳')
+app.get('/', (req, res) => {
+    res.json('Hey this is my API running 🥳')
 })
 
 app.get('/about', (req, res) => {
-    res.send('This is my about route..... ')
+    res.json({ message: 'This is my about route..... ' })
 })
 
 app.listen(PORT, () => {
