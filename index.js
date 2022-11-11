@@ -6,6 +6,11 @@ const Lodging = require('./models/lodging')
 const PORT = 4000
 const cors = require('cors')
 const lodgingRouter = require('./routes/lodging');
+const createError = require('http-errors');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+
 
 
 mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/KasaDB", {
@@ -18,6 +23,13 @@ mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/
 
 //Cors
 app.use(cors());
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 //Database connection
