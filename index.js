@@ -5,7 +5,13 @@ const app = express()
 const Lodging = require('./models/lodging')
 const PORT = 4000
 
-
+//Cors
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+    next();
+});
 
 
 //Database connection
@@ -17,16 +23,13 @@ mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/
     .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 
-app.use('/lodgings', async (req, res) => {
+app.get('/lodgings', async (req, res) => {
     const lodgingsData = await Lodging.find()
     try {
         res.json({
             status: 200,
             lodgings: lodgingsData
         })
-        res.send(
-            'requete reçue'
-        )
     }
     catch (error) {
         res.json({
