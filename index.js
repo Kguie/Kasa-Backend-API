@@ -24,9 +24,19 @@ mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/
 
 
 app.use('/lodgings', getAllLodgings = async (req, res) => {
-    Lodging.find()
-        .then(lodgings => { res.send(res.status(200).json(lodgings)) })
-        .catch(error => { res.send(res.status(400).json({ error })) })
+    const lodgingsData = await Lodging.find()
+    try {
+        res.json({
+            status: 200,
+            lodgings: lodgingsData
+        })
+    }
+    catch (error) {
+        res.json({
+            status: 400,
+            message: { error }
+        })
+    }
 }
 )
 
