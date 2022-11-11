@@ -28,10 +28,10 @@ app.get('/lodgings', async (req, res) => {
     const results = await Lodging.find({})
 
     try {
-        res.json({
-            status: 200,
-            lodgings: results
-        })
+        res.send(
+            'status: 200,'
+
+        )
     }
     catch (error) {
         res.json({
