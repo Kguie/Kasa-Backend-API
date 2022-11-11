@@ -6,6 +6,15 @@ const Lodging = require('./models/lodging')
 const PORT = 4000
 const cors = require('cors')
 
+
+mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/KasaDB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log("Connexion à MongoDB réussie !"))
+    .catch(() => console.log("Connexion à MongoDB échouée !"));
+
+
 //Cors
 app.use(cors());
 
@@ -13,13 +22,6 @@ app.use(cors());
 //Database connection
 
 app.get('/lodgings', async (req, res) => {
-    mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/KasaDB", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-        .then(() => console.log("Connexion à MongoDB réussie !"))
-        .catch(() => console.log("Connexion à MongoDB échouée !"));
-
 
     const results = await Lodging.find({})
 
