@@ -30,6 +30,9 @@ app.use('/lodgings', async (req, res) => {
             status: 200,
             lodgings: lodgingsData
         })
+        res.send(
+            'requete reçue'
+        )
     }
     catch (error) {
         res.json({
