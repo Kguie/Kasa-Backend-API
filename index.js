@@ -15,20 +15,22 @@ app.use((req, res, next) => {
 
 
 //Database connection
-mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/KasaDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log("Connexion à MongoDB réussie !"))
-    .catch(() => console.log("Connexion à MongoDB échouée !"));
-
 
 app.get('/lodgings', async (req, res) => {
-    const lodgingsData = await Lodging.find()
+    mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/KasaDB", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+        .then(() => console.log("Connexion à MongoDB réussie !"))
+        .catch(() => console.log("Connexion à MongoDB échouée !"));
+
+
+    const results = await Lodging.find({})
+
     try {
         res.json({
             status: 200,
-            lodgings: lodgingsData
+            lodgings: results
         })
     }
     catch (error) {
