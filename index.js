@@ -36,7 +36,7 @@ app.get('/lodgings', async (req, res) => {
 }
 )
 
-app.get('/', (req, res) => {
+app.get('/lodging', (req, res) => {
     res.send('Hey this is my API running 🥳')
 })
 
