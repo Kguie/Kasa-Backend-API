@@ -23,7 +23,7 @@ mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/
     .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 
-app.use('/lodgings', getAllLodgings = async (req, res) => {
+app.use('/lodgings', async (req, res) => {
     const lodgingsData = await Lodging.find()
     try {
         res.json({
