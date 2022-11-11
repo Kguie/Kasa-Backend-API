@@ -5,6 +5,7 @@ const app = express()
 const Lodging = require('./models/lodging')
 const PORT = 4000
 const cors = require('cors')
+const lodgingRouter = require('./routes/lodging');
 
 
 mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/KasaDB", {
@@ -40,6 +41,8 @@ app.get('/lodgings', async (req, res) => {
 }
 )
 
+app.use('/api/lodgings', lodgingRouter);
+
 app.get('/', (req, res) => {
     res.json('Hey this is my API running 🥳')
 })
@@ -48,8 +51,35 @@ app.get('/about', (req, res) => {
     res.json({ message: 'This is my about route..... ' })
 })
 
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+    next(createError(404));
+});
+
+// error handler
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+});
+
 app.listen(PORT, () => {
     console.log(`API listening on PORT ${PORT} `)
 })
 // Export the Express API
 module.exports = app
+
+
+
+
+
+
+
+
+
+
+
