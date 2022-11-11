@@ -1,30 +1,19 @@
-const mongoose = require("mongoose");
-const express = require("express");
-const lodgingRouter = require("./routes/lodging")
+const express = require('express')
 
+const app = express()
+const PORT = 4000
 
-const app = express();
-
-const PORT = process.env.PORT || 5050;
-
-//Database connection
-mongoose.connect("mongodb+srv://kguie:GfQLpqTpFOeXvAFr@kasa.nsgwlcc.mongodb.net/KasaDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+app.listen(PORT, () => {
+    console.log(`API listening on PORT ${PORT} `)
 })
-    .then(() => console.log("Connexion à MongoDB réussie !"))
-    .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-//Cors
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-    next();
-});
+app.get('/', (req, res) => {
+    res.send('Hey this is my API running 🥳')
+})
 
+app.get('/about', (req, res) => {
+    res.send('This is my about route..... ')
+})
 
-//Routes
-app.use('/api/lodgings', lodgingRouter);
-
-app.listen(PORT, () => console.log(`server is running in ${PORT}`))
+// Export the Express API
+module.exports = app
